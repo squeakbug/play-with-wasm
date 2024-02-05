@@ -1,0 +1,16 @@
+[package]
+name = "j4ffallingsand"
+version = "0.1.0"
+edition = "2021"
+
+[profile.release]
+lto = true
+opt-level = "s"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+wasm-bindgen = "0.2.90"
+web-sys = "0.3.67"
+console_error_panic_hook = { version = "0.1.7", optional = true }
