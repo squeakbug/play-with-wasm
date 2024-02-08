@@ -1,23 +1,4 @@
-import init, {WorldVM, Cell, create_world} from "j4ffallingsand";
-
-const cell_type_color_map : any= {
-    0:  "#ffffff",
-    1:  "#555555",
-    2:  "#555555",
-    3:  "#555555",
-    4:  "#555555",
-    5:  "#555555",
-    6:  "#555555",
-    7:  "#555555",
-    8:  "#555555",
-    9:  "#555555",
-    10: "#555555",
-    11: "#555555",
-}
-
-function render_cell_on_canvas() {
-    
-}
+import init, {WorldVM, Cell, CellType, create_world} from "j4ffallingsand";
 
 async function main() {
     let exports = await init()
@@ -36,8 +17,8 @@ async function main() {
 
     const renderLoop = () => {
         world.tick()
-        world.render_cell_on_canvas(canvas)
         drawGrid()
+        world.render_cell_on_canvas(canvas)
         animationId = requestAnimationFrame(renderLoop);
     };
 
@@ -48,6 +29,7 @@ async function main() {
     const play = () => {
         playPauseButton.textContent = "⏸";
         renderLoop();
+        world.resume_simultaion();
     };
 
     const pause = () => {
@@ -55,6 +37,7 @@ async function main() {
         if (animationId == null) return ;
         cancelAnimationFrame(animationId);
         animationId = null;
+        world.pause_simulation();
     };
 
     const playPauseButton = <HTMLButtonElement>document.getElementById("play-pause");
@@ -65,6 +48,32 @@ async function main() {
             pause();
         }
     });
+
+    var slider = <HTMLInputElement>document.getElementById("brush-size-slider");
+    slider.oninput = function() {
+        world.set_brush_size(slider.value);
+    } 
+
+    const id_btn_to_cell_type = {
+        "acid": CellType.Acid,
+        "fire": CellType.Fire,
+        "gunpowder": CellType.Gunpowder,
+        "lava": CellType.Lava,
+        "oil": CellType.Oil,
+        "propane": CellType.Propane,
+        "rock": CellType.Rock,
+        "sand": CellType.Sand,
+        "vapor": CellType.Vapor,
+        "water": CellType.Water,
+        "wood": CellType.Wood,
+    }
+
+    Object.entries(id_btn_to_cell_type).forEach(entry => {
+        const btn = <HTMLButtonElement>document.getElementById(entry[0]);
+        btn.addEventListener("click", event => {
+            world.set_cell_type(entry[1])
+        });
+    });    
 
     canvas.addEventListener("click", event => {
         const boundingRect = canvas.getBoundingClientRect();

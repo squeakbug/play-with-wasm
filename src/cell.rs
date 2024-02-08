@@ -1,6 +1,3 @@
-use std::collections::HashMap;
-
-use fixedbitset::FixedBitSet;
 use wasm_bindgen::prelude::*;
 
 use crate::space::Space;
@@ -36,22 +33,6 @@ pub enum CellType {
     Lava,
     Acid,
     Vapor,
-}
-
-pub struct CellDispatcher {
-    pub map: HashMap<CellType, Box<dyn CellLike>>,
-}
-
-impl CellDispatcher {
-    pub fn new() -> Self {
-        CellDispatcher {
-            map: HashMap::new()
-        }
-    }
-
-    pub fn dispatch(&self, ct: CellType) -> Option<&Box<(dyn CellLike + 'static)>> {
-        self.map.get(&ct)
-    }
 }
 
 #[wasm_bindgen]

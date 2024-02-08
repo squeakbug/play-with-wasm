@@ -15,7 +15,7 @@ pub enum BrushMode {
 pub struct Brush {
     pub brush_mode: BrushMode,
     pub brush_type: BrushType,
-    pub brush_size: u32,
+    pub brush_size: usize,
 }
 
 impl Brush {

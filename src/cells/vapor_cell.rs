@@ -3,16 +3,16 @@ use crate::{
     space::Space,
 };
 
-pub struct RockCell {
+pub struct VaporCell {
     pub comm_props: CellCommonProperties,
 }
 
-impl RockCell {
+impl VaporCell {
     pub fn with_comm_props(cp: CellCommonProperties) -> Self {
         Self { comm_props: cp }
     }
 }
 
-impl CellLike for RockCell {
+impl CellLike for VaporCell {
     fn tick(&self, cctx: CellContext, space: &mut Space) {}
 }

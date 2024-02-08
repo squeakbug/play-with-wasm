@@ -1,4 +1,10 @@
-use crate::cell::{CellCommonProperties, CellType};
+use crate::{
+    cell::{CellCommonProperties, CellLike, CellType},
+    cells::{
+        AcidCell, EmptyCell, FireCell, GunpowderCell, LavaCell, OilCell, PropaneCell, RockCell,
+        SandCell, WaterCell, WoodCell,
+    },
+};
 
 pub static CELL_PROPERTIES: [CellCommonProperties; 11] = [
     CellCommonProperties {
@@ -101,3 +107,41 @@ pub static CELL_PROPERTIES: [CellCommonProperties; 11] = [
         color: "#009966",
     },
 ];
+
+pub fn get_cell_logics() -> Vec<Box<dyn CellLike>> {
+    vec![
+        Box::new(EmptyCell::with_comm_props(
+            CELL_PROPERTIES[CellType::Empty as usize].clone(),
+        )),
+        Box::new(RockCell::with_comm_props(
+            CELL_PROPERTIES[CellType::Rock as usize].clone(),
+        )),
+        Box::new(WoodCell::with_comm_props(
+            CELL_PROPERTIES[CellType::Wood as usize].clone(),
+        )),
+        Box::new(SandCell::with_comm_props(
+            CELL_PROPERTIES[CellType::Sand as usize].clone(),
+        )),
+        Box::new(GunpowderCell::with_comm_props(
+            CELL_PROPERTIES[CellType::Gunpowder as usize].clone(),
+        )),
+        Box::new(WaterCell::with_comm_props(
+            CELL_PROPERTIES[CellType::Water as usize].clone(),
+        )),
+        Box::new(OilCell::with_comm_props(
+            CELL_PROPERTIES[CellType::Oil as usize].clone(),
+        )),
+        Box::new(PropaneCell::with_comm_props(
+            CELL_PROPERTIES[CellType::Propane as usize].clone(),
+        )),
+        Box::new(FireCell::with_comm_props(
+            CELL_PROPERTIES[CellType::Fire as usize].clone(),
+        )),
+        Box::new(LavaCell::with_comm_props(
+            CELL_PROPERTIES[CellType::Lava as usize].clone(),
+        )),
+        Box::new(AcidCell::with_comm_props(
+            CELL_PROPERTIES[CellType::Acid as usize].clone(),
+        )),
+    ]
+}

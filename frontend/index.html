@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <title>Getting Started</title>
-    <script src="https://unpkg.com/lodash@4.17.21"></script>
+    <link rel="stylesheet" href="index.css">
   </head>
   <body>
     <script src="./dist/main.js"></script>
@@ -13,11 +13,23 @@
       <div id="select-types"></div>
     </div>
 
-    <div>
-      <div>
-        <button id="play-pause">Play/Pause</button>
-        <span id="frame-rate"></span>
-      </div>
+    <div class="btn-group">
+      <button id="play-pause">▶</button>
+      <button id="acid">Acid</button>
+      <button id="fire">Fire</button>
+      <button id="gunpowder">Gunpowder</button>
+      <button id="lava">Lava</button>
+      <button id="oil">Oil</button>
+      <button id="propane">Propane</button>
+      <button id="rock">Rock</button>
+      <button id="sand">Sand</button>
+      <button id="vapor">Vapor</button>
+      <button id="water">Water</button>
+      <button id="wood">Wood</button>
+    </div>
+
+    <div class="slidecontainer">
+      <input type="range" min="1" max="10" value="1" class="slider" id="brush-size-slider">
     </div>
 
   </body>

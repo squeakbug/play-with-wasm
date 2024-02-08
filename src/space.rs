@@ -1,14 +1,11 @@
-use fixedbitset::FixedBitSet;
-use wasm_bindgen::prelude::*;
-
-use crate::{cell::{ Cell, CellType }, simulator::Simulator};
+use crate::cell::{Cell, CellType};
 
 pub struct Space {
     pub width: usize,
     pub height: usize,
     pub generation: u8,
     pub cells: Vec<Cell>,
-    pub shadow_cells: Vec<Cell>, 
+    pub shadow_cells: Vec<Cell>,
 }
 
 impl Space {
@@ -49,11 +46,15 @@ impl Space {
             cell_type,
             dx: 0.,
             dy: 0.,
-            temp: 27
+            temp: 27,
         }
     }
 
     pub fn get_cell(&self, indx: usize) -> Cell {
         self.cells[indx]
+    }
+
+    pub fn get_shadow_cell(&self, indx: usize) -> Cell {
+        self.shadow_cells[indx]
     }
 }

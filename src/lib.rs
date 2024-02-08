@@ -1,21 +1,21 @@
-mod utils;
+mod brush;
 mod cell;
-mod space;
-mod simulator;
 mod cells;
 mod config;
+mod simulator;
+mod space;
+mod utils;
 mod world;
-mod brush;
 
-use brush::{Brush, BrushMode, BrushType};
-use cell::{Cell, CellType};
-use wasm_bindgen::prelude::*;
-use world::World;
-use web_sys::{ Document, Window, HtmlElement, HtmlCanvasElement, CanvasRenderingContext2d, MouseEvent, TouchEvent };
 use crate::config::CELL_PROPERTIES;
+use brush::{Brush, BrushMode, BrushType};
+use cell::CellType;
+use wasm_bindgen::prelude::*;
+use web_sys::{CanvasRenderingContext2d, HtmlCanvasElement};
+use world::World;
 
 /// Модель представления мира
-/// 
+///
 /// Здесь живет состояние интерфейса
 /// Представление (JS frontend) может только читать модель и отправлять команды
 #[wasm_bindgen]
@@ -23,7 +23,7 @@ pub struct WorldVM {
     world: World,
     paused: bool,
     cell_type: CellType,
-    brush: Brush
+    brush: Brush,
 }
 
 #[wasm_bindgen]
@@ -38,7 +38,7 @@ impl WorldVM {
     }
 
     pub fn tick(&mut self) {
-        //self.world.tick();
+        self.world.tick();
     }
 
     pub fn tap_on_grid(&mut self, y: usize, x: usize) {
@@ -61,7 +61,7 @@ impl WorldVM {
         self.cell_type = ct;
     }
 
-    pub fn set_brush_size(&mut self, bs: u32) {
+    pub fn set_brush_size(&mut self, bs: usize) {
         self.brush.brush_size = bs;
     }
 
@@ -80,8 +80,11 @@ impl WorldVM {
     pub fn render_cell_on_canvas(&self, canvas: HtmlCanvasElement) {
         let cells = self.world.get_cells();
         let ctx = canvas
-            .get_context("2d").unwrap().unwrap()
-            .dyn_into::<CanvasRenderingContext2d>().unwrap();
+            .get_context("2d")
+            .unwrap()
+            .unwrap()
+            .dyn_into::<CanvasRenderingContext2d>()
+            .unwrap();
         ctx.begin_path();
 
         let height = self.world.get_height();
@@ -91,12 +94,14 @@ impl WorldVM {
                 let indx = self.world.get_indx(row, col);
                 let cell = cells[indx];
 
-                ctx.set_fill_style(&JsValue::from(CELL_PROPERTIES[cell.cell_type as usize].color));
+                ctx.set_fill_style(&JsValue::from(
+                    CELL_PROPERTIES[cell.cell_type as usize].color,
+                ));
                 ctx.fill_rect(
                     (col * (5 + 1) + 1) as f64,
                     (row * (5 + 1) + 1) as f64,
-                    5 as f64,
-                    5 as f64
+                    5_f64,
+                    5_f64,
                 );
             }
         }
