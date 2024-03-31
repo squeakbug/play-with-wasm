@@ -20,7 +20,7 @@ impl Space {
             width,
             height,
             generation: 0,
-            cells: vec![empty_cell.clone(); width * height],
+            cells: vec![empty_cell; width * height],
             shadow_cells: vec![empty_cell; width * height],
         }
     }
@@ -35,23 +35,6 @@ impl Space {
 
     pub fn get_indx(&self, y: usize, x: usize) -> usize {
         self.height * y + x
-    }
-
-    pub fn get_cells(&self) -> Vec<Cell> {
-        self.cells.clone()
-    }
-
-    pub fn create_cell(&mut self, y: usize, x: usize, cell_type: CellType) {
-        self.cells[y * self.height + x] = Cell {
-            cell_type,
-            dx: 0.,
-            dy: 0.,
-            temp: 27,
-        }
-    }
-
-    pub fn get_cell(&self, indx: usize) -> Cell {
-        self.cells[indx]
     }
 
     pub fn get_shadow_cell(&self, indx: usize) -> Cell {

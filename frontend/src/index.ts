@@ -49,9 +49,14 @@ async function main() {
         }
     });
 
+    const clearButton = <HTMLButtonElement>document.getElementById("reset");
+    clearButton.addEventListener("click", event => {
+        world.reset_world()
+    });
+
     var slider = <HTMLInputElement>document.getElementById("brush-size-slider");
     slider.oninput = function() {
-        world.set_brush_size(slider.value);
+        world.set_brush_size(+slider.value);
     } 
 
     const id_btn_to_cell_type = {

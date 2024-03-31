@@ -16,9 +16,9 @@ pub struct World {
 }
 
 impl Default for World {
-   fn default() -> Self {
-       Self::new()
-   }
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 impl World {
@@ -58,7 +58,12 @@ impl World {
         self.paused = false;
     }
 
-    pub fn reset(&mut self) {}
+    pub fn reset(&mut self) {
+        let logics = get_cell_logics();
+        self.space = Space::with_witdh_height(100, 100);
+        self.sim = Simulator::with_logics(logics);
+        self.paused = false;
+    }
 
     pub fn get_cells(&self) -> &Vec<Cell> {
         &self.space.cells

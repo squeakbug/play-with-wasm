@@ -1,3 +1,4 @@
+use crate::cells::common::{saturate_add, saturate_sub};
 use crate::{
     cell::{CellCommonProperties, CellContext, CellLike, CellType},
     space::Space,
@@ -10,22 +11,6 @@ pub struct FireCell {
 impl FireCell {
     pub fn with_comm_props(cp: CellCommonProperties) -> Self {
         Self { comm_props: cp }
-    }
-}
-
-fn saturate_sub(v: usize, a: usize, min: usize) -> usize {
-    if v <= min + a {
-        min
-    } else {
-        v - a
-    }
-}
-
-fn saturate_add(v: usize, a: usize, max: usize) -> usize {
-    if v >= max - a {
-        max
-    } else {
-        v + a
     }
 }
 

@@ -27,3 +27,9 @@ impl Brush {
         }
     }
 }
+
+impl Default for Brush {
+    fn default() -> Self {
+        Self::new()
+    }
+}

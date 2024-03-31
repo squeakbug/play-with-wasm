@@ -14,5 +14,5 @@ impl EmptyCell {
 }
 
 impl CellLike for EmptyCell {
-    fn tick(&self, cctx: CellContext, space: &mut Space) {}
+    fn tick(&self, _: CellContext, _: &mut Space) {}
 }

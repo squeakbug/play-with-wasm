@@ -1,6 +1,5 @@
 use crate::{
-    cell::{Cell, CellContext, CellLike, CellType},
-    config::CELL_PROPERTIES,
+    cell::{CellContext, CellLike},
     space::Space,
 };
 

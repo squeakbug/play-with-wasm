@@ -14,5 +14,5 @@ impl RockCell {
 }
 
 impl CellLike for RockCell {
-    fn tick(&self, cctx: CellContext, space: &mut Space) {}
+    fn tick(&self, _: CellContext, _: &mut Space) {}
 }

@@ -1,12 +1,11 @@
 use crate::{
     cell::{CellCommonProperties, CellLike, CellType},
     cells::{
-        AcidCell, EmptyCell, FireCell, GunpowderCell, LavaCell, OilCell, PropaneCell, RockCell,
-        SandCell, WaterCell, WoodCell,
+        AcidCell, EmptyCell, FireCell, GunpowderCell, LavaCell, OilCell, PropaneCell, RockCell, SandCell, VaporCell, WaterCell, WoodCell
     },
 };
 
-pub static CELL_PROPERTIES: [CellCommonProperties; 11] = [
+pub static CELL_PROPERTIES: [CellCommonProperties; 12] = [
     CellCommonProperties {
         name: "Empty",
         cell_type: CellType::Empty,
@@ -106,6 +105,15 @@ pub static CELL_PROPERTIES: [CellCommonProperties; 11] = [
         dissolvable: false,
         color: "#009966",
     },
+    CellCommonProperties {
+        name: "Vapor",
+        cell_type: CellType::Vapor,
+        density: 0.1,
+        temp_coefficient: 0.1,
+        flammable: false,
+        dissolvable: false,
+        color: "#EEEEFF",
+    },
 ];
 
 pub fn get_cell_logics() -> Vec<Box<dyn CellLike>> {
@@ -142,6 +150,9 @@ pub fn get_cell_logics() -> Vec<Box<dyn CellLike>> {
         )),
         Box::new(AcidCell::with_comm_props(
             CELL_PROPERTIES[CellType::Acid as usize].clone(),
+        )),
+        Box::new(VaporCell::with_comm_props(
+            CELL_PROPERTIES[CellType::Vapor as usize].clone(),
         )),
     ]
 }

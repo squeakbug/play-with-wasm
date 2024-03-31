@@ -4,7 +4,6 @@ mod cells;
 mod config;
 mod simulator;
 mod space;
-mod utils;
 mod world;
 
 use crate::config::CELL_PROPERTIES;

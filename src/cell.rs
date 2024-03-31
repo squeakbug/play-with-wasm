@@ -1,6 +1,6 @@
 use wasm_bindgen::prelude::*;
 
-use crate::space::Space;
+use crate::{config::CELL_PROPERTIES, space::Space};
 
 #[derive(Clone, Debug)]
 pub struct CellCommonProperties {
@@ -42,6 +42,14 @@ pub struct Cell {
     pub dx: f32,
     pub dy: f32,
     pub temp: i8,
+}
+
+impl Cell {
+    pub fn get_kinetic_e(&self) -> f32 {
+        let density = CELL_PROPERTIES[self.cell_type as usize].density;
+        let (dx, dy) = (self.dx, self.dy);
+        ((dx * dx + dy * dy) * density as f32) / 2.0
+    }
 }
 
 pub struct CellContext {

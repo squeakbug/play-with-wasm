@@ -1,3 +1,4 @@
+use crate::cells::common::{saturate_add, saturate_sub};
 use crate::{
     cell::{CellCommonProperties, CellContext, CellLike, CellType},
     space::Space,
@@ -16,10 +17,33 @@ impl WaterCell {
 impl CellLike for WaterCell {
     fn tick(&self, cctx: CellContext, space: &mut Space) {
         let (cy, cx) = (cctx.y, cctx.x);
-        let pindx = space.get_indx(cy - 1, cx);
-        if cy != 0 && space.cells[pindx].cell_type != CellType::Empty {
+        let nindx = space.get_indx(saturate_add(cy, 1, space.height - 1), cx);
+        if cy != space.height - 1 {
             let cindx = space.get_indx(cy, cx);
-            space.cells[cindx] = space.cells[pindx];
+            if space.cells[nindx].cell_type == CellType::Empty {
+                space.shadow_cells[nindx] = space.cells[cindx];
+                space.shadow_cells[cindx].cell_type = CellType::Empty;
+            } else {
+                let (dy1, dx1) = (
+                    saturate_add(cy, 1, space.height - 1),
+                    saturate_add(cx, 1, space.width - 1),
+                );
+                let dindx1 = space.get_indx(dy1, dx1);
+                let (dy2, dx2) = (
+                    saturate_add(cy, 1, space.height - 1),
+                    saturate_sub(cx, 1, 0),
+                );
+                let dindx2 = space.get_indx(dy2, dx2);
+                if space.cells[dindx1].cell_type == CellType::Empty {
+                    space.shadow_cells[dindx1] = space.cells[cindx];
+                    space.shadow_cells[cindx].cell_type = CellType::Empty;
+                } else if space.cells[dindx2].cell_type == CellType::Empty {
+                    space.shadow_cells[dindx2] = space.cells[cindx];
+                    space.shadow_cells[cindx].cell_type = CellType::Empty;
+                } else {
+                    // Ячейка остается в прежнем состоянии
+                }
+            }
         }
     }
 }
