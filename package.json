@@ -5,17 +5,18 @@
   "main": "webpack.config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "watch 'npm run build' ../pkg",
+    "watch": "watch 'npm run build' pkg",
     "build": "webpack"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "j4ffallingsand": "file:../pkg",
-    "watch": "^1.0.2"
+    "j4ffallingsand": "file:./pkg",
+    "watch": "^0.13.0"
   },
   "devDependencies": {
+    "copy-webpack-plugin": "^12.0.2",
     "exports-loader": "^5.0.0",
     "file-loader": "^6.2.0",
     "ts-loader": "^9.5.1",

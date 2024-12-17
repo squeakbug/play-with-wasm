@@ -1,9 +1,10 @@
 const webpack = require("webpack");
 const path = require('path');
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   mode: "development",
-  entry: './src/index.ts',
+  entry: './frontend/index.ts',
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
@@ -14,9 +15,6 @@ module.exports = {
         test: /fibonacci\.wasm$/,
         type: "javascript/auto",
         loader: "file-loader",
-        options: {
-          publicPath: "dist/"
-        }
       },
       {
         test: /\.tsx?$/,
@@ -35,4 +33,11 @@ module.exports = {
   experiments: {
     asyncWebAssembly: true
   },
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        { from: "frontend", to: "." },
+      ],
+    }),
+  ]
 };
