@@ -31,25 +31,6 @@ impl World {
         }
     }
 
-    pub fn tap_on_grid(&mut self, y: usize, x: usize, ct: CellType, brush: &Brush) {
-        let new_cell = Cell {
-            cell_type: ct,
-            dx: 0.,
-            dy: 0.,
-            temp: 27,
-        };
-        if !self.paused {
-            let bs2 = brush.brush_size / 2;
-            for x in (x - bs2)..(x + bs2 + 1) {
-                for y in (y - bs2)..(y + bs2 + 1) {
-                    let indx = self.space.get_indx(y, x);
-                    self.space.shadow_cells[indx] = new_cell;
-                    self.space.cells[indx] = new_cell;
-                }
-            }
-        }
-    }
-
     pub fn pause(&mut self) {
         self.paused = true;
     }

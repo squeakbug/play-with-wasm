@@ -13,7 +13,6 @@ pub struct CellCommonProperties {
     pub color: &'static str,
 }
 
-/// Инкапсюляция логики поведения ячейки при обновлении мира
 pub trait CellLike {
     fn tick(&self, cctx: CellContext, space: &mut Space);
 }
