@@ -1,11 +1,12 @@
-use web_sys::{window, HtmlCanvasElement};
 use web_sys::{CanvasRenderingContext2d, WebGlRenderingContext, WebGl2RenderingContext};
 
-pub struct GameplayRendererWebGL {
+use crate::{config::CELL_PROPERTIES, world::World};
+
+pub struct _GameplayRendererWebGL {
     gl: WebGlRenderingContext,
 }
 
-pub struct GameplayRendererWebGL2 {
+pub struct _GameplayRendererWebGL2 {
     gl: WebGl2RenderingContext,
 }
 
@@ -14,25 +15,21 @@ pub struct GameplayRenderer2d {
 }
 
 impl GameplayRenderer2d {
-    pub fn render(&self) {
+    pub fn render_world(&self, world: &World) {
         self.ctx.begin_path();
 
-        let render_data = self.world.get_cells();
-        let height = self.world.get_height();
-        let width = self.world.get_width();
+        let cells = world.get_cells();
+        let height = self.ctx.canvas().unwrap().height() as usize;
+        let width = self.ctx.canvas().unwrap().width() as usize;
         for row in 0..height {
             for col in 0..width {
-                let indx = self.world.get_indx(row, col);
+                let indx = world.get_indx(row, col);
                 let cell = cells[indx];
- 
-                ctx.set_fill_style(&JsValue::from(
-                    CELL_PROPERTIES[cell.cell_type as usize].color,
-                ));
-                ctx.fill_rect(
-                    (col * (5 + 1) + 1) as f64,
-                    (row * (5 + 1) + 1) as f64,
-                    5_f64,
-                    5_f64,
+                self.ctx.set_fill_style_str(
+                    CELL_PROPERTIES[cell.cell_type as usize].color
+                );
+                self.ctx.fill_rect(
+                   col as f64, row as f64, 1_f64, 1_f64,
                 );
             }
         }

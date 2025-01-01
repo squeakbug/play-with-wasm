@@ -1,2 +1,4 @@
 * make rendering of framebuffer with webgl api
-* 
+* make controls available through JS API
+* transform coordinates by renderer frame coordinates to world coordinates
+* use vector instructions: https://webassembly.github.io/spec/core/syntax/instructions.html#vector-instructions

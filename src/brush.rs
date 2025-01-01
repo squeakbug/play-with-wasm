@@ -1,8 +1,6 @@
-use std::cell::Cell;
-
 use wasm_bindgen::prelude::*;
 
-use crate::{shared::Vec2d, world::{self, World}};
+use crate::{shared::Vec2d, world::World};
 
 #[wasm_bindgen]
 #[derive(Clone)]
@@ -67,22 +65,22 @@ impl Brush {
 
 impl Brush {
     fn apply_square(&self, world: &mut World) {
-        let new_cell = Cell {
-            cell_type: ct,
-            dx: 0.,
-            dy: 0.,
-            temp: 27,
-        };
-        if !self.paused {
-            let bs2 = brush.brush_size / 2;
-            for x in (x - bs2)..(x + bs2 + 1) {
-                for y in (y - bs2)..(y + bs2 + 1) {
-                    let indx = self.space.get_indx(y, x);
-                    self.space.shadow_cells[indx] = new_cell;
-                    self.space.cells[indx] = new_cell;
-                }
-            }
-        }
+        // let new_cell = Cell {
+        //     cell_type: ct,
+        //     dx: 0.,
+        //     dy: 0.,
+        //     temp: 27,
+        // };
+        // if !self.paused {
+        //     let bs2 = brush.brush_size / 2;
+        //     for x in (x - bs2)..(x + bs2 + 1) {
+        //         for y in (y - bs2)..(y + bs2 + 1) {
+        //             let indx = self.space.get_indx(y, x);
+        //             self.space.shadow_cells[indx] = new_cell;
+        //             self.space.cells[indx] = new_cell;
+        //         }
+        //     }
+        // }
     }
 
     fn apply_circle(&self, world: &mut World) {
@@ -94,4 +92,9 @@ impl Default for Brush {
     fn default() -> Self {
         Self::new()
     }
+}
+
+#[wasm_bindgen]
+pub fn create_default_brush() -> Brush {
+    Brush::default()
 }

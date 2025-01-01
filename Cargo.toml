@@ -8,17 +8,21 @@ lto = true
 opt-level = "s"
 
 [lib]
-crate-type = ["cdylib", "rlib"]
+crate-type = ["cdylib"]
 
 [dependencies]
-wasm-bindgen = "0.2.90"
-js-sys = "0.3.67"
-web-sys = { version = "0.3.67", features = [
-    "Window", "console", "Document", "Element", 
-    "HtmlElement", "HtmlCanvasElement", "CanvasRenderingContext2d", "WebGlRenderingContext", "WebGl2RenderingContext",
-    "MouseEvent", "Touch", "TouchEvent", "TouchList", "Performance"
+wasm-bindgen = "0.2.99"
+wasm-bindgen-futures = "0.4.49"
+gloo-utils = { version = "0.2.0" }
+js-sys = "0.3.76"
+web-sys = { version = "0.3.76", features = [
+    "Window", "console", "Document", "Element", "HtmlElement", "HtmlCanvasElement", 
+    "CanvasRenderingContext2d", "WebGlRenderingContext", "WebGl2RenderingContext",
+    "MouseEvent", "Touch", "TouchEvent", "TouchList", "Performance",
+    "DomRect", "Element"
 ] }
 console_error_panic_hook = { version = "0.1.7", optional = true }
 fixedbitset = "0.4.2"
 derive_builder = "0.20.2"
 anyhow = "1.0.95"
+serde_json = "1.0.134"

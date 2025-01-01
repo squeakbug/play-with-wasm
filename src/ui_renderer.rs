@@ -1,4 +1,4 @@
-use web_sys::{window, HtmlCanvasElement, CanvasRenderingContext2d};
+use web_sys::CanvasRenderingContext2d;
 
 pub struct UIRenderer2d {
     ctx: CanvasRenderingContext2d,

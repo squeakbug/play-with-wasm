@@ -1,6 +1,6 @@
-const webpack = require("webpack");
 const path = require('path');
-const CopyPlugin = require("copy-webpack-plugin");
+const WasmPackPlugin = require('@wasm-tool/wasm-pack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: "development",
@@ -8,6 +8,7 @@ module.exports = {
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
+    clean: true,
   },
   module: {
     rules: [
@@ -27,6 +28,10 @@ module.exports = {
       },
     ]
   },
+  devServer: {
+    static: path.resolve(__dirname, 'dist'),
+    port: 3000,
+  },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
   },
@@ -34,9 +39,14 @@ module.exports = {
     asyncWebAssembly: true
   },
   plugins: [
-    new CopyPlugin({
-      patterns: [
-        { from: "frontend", to: "." },
+    new HtmlWebpackPlugin({
+      template: './frontend/index.html',
+      filename: 'index.html',
+    }),
+    new WasmPackPlugin({
+      crateDirectory: path.resolve(__dirname, 'src'),
+      watchDirectories: [
+        path.resolve(__dirname, "./src")
       ],
     }),
   ]

@@ -7,10 +7,15 @@ Installed [wasm-pack](https://rustwasm.github.io/wasm-pack/installer/)
 ## Сборка
 
 ```sh
-wasm-pack build --target web
+npm install    # install dependencies
+npm run build  # build wasm module and bundle it with frontend
 ```
 
 ## Запуск
+
+```sh
+npm start      # watch changes in source directories
+```
 
 ## Ссылки
 

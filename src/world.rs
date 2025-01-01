@@ -1,14 +1,10 @@
-use wasm_bindgen::prelude::*;
-
 use crate::{
-    brush::Brush,
-    cell::{Cell, CellType},
+    cell::Cell,
     config::get_cell_logics,
     simulator::Simulator,
     space::Space,
 };
 
-#[wasm_bindgen]
 pub struct World {
     space: Space,
     sim: Simulator,

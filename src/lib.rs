@@ -10,16 +10,18 @@ mod ui_renderer;
 mod gameplay_renderer;
 mod background_renderer;
 
-use background_renderer::BackgroundRenderer2d;
-use derive_builder::Builder;
-use gameplay_renderer::GameplayRenderer2d;
-use ui_renderer::UIRenderer2d;
 use wasm_bindgen::prelude::*;
+use derive_builder::Builder;
+use gloo_utils::format::JsValueSerdeExt;
 use web_sys::{CanvasRenderingContext2d, HtmlCanvasElement};
 
+use shared::Vec2d;
 use world::World;
 use brush::Brush;
 use cell::CellType;
+use ui_renderer::UIRenderer2d;
+use background_renderer::BackgroundRenderer2d;
+use gameplay_renderer::GameplayRenderer2d;
 
 #[wasm_bindgen]
 #[derive(Builder)]
@@ -38,14 +40,15 @@ impl WorldVM {
         self.world.tick();
     }
 
-    pub fn tap_on_grid(&mut self, y: usize, x: usize) {
-        // TODO: transform by renderer frame coordinates to world coordinates
-        self.brush.set_position(x, y);
+    pub fn tap_on_grid(&mut self, y: f64, x: f64) {
+        let world_coord = self.background_renderer
+            .apply_reverse_frame_matrix(Vec2d { x, y });
+        self.brush.set_position(world_coord.x, world_coord.y);
         self.brush.apply(&mut self.world);
     }
 
-    pub fn hover_on_grid(&mut self, y: usize, x: usize) {
-        self.brush.set_position(x, y);
+    pub fn hover_on_grid(&mut self, y: f64, x: f64) {
+        self.brush.set_position(x as usize, y as usize);
     }
 
     pub fn pause_simulation(&mut self) {
@@ -66,7 +69,7 @@ impl WorldVM {
 
     pub fn render(&self) {
         self.background_renderer.render();
-        self.gameplay_renderer.render();
+        self.gameplay_renderer.render_world(&self.world);
         self.ui_renderer.render();
     }
 }
@@ -76,7 +79,7 @@ pub fn create_world(
     ui_canvas: HtmlCanvasElement,
     gameplay_canvas: HtmlCanvasElement,
     background_canvas: HtmlCanvasElement,
-) -> Option<WorldVM> {
+) -> WorldVM {
     let ui_ctx = ui_canvas
         .get_context("2d")
         .unwrap()
@@ -89,8 +92,11 @@ pub fn create_world(
         .unwrap()
         .dyn_into::<CanvasRenderingContext2d>()
         .unwrap();
+    let bg_ctx_options = JsValue::from_serde(&serde_json::json!({
+        "alpha": false,
+    })).unwrap();
     let bg_ctx = background_canvas
-        .get_context("2d")
+        .get_context_with_context_options("2d", &bg_ctx_options)
         .unwrap()
         .unwrap()
         .dyn_into::<CanvasRenderingContext2d>()
@@ -101,5 +107,5 @@ pub fn create_world(
         .gameplay_renderer(gm_ctx.into())
         .background_renderer(bg_ctx.into())
         .build()
-        .ok()
+        .unwrap()
 }
