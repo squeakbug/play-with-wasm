@@ -1,18 +1,18 @@
 import './index.css';
-import init, {WorldVM, CellType, create_world, create_default_brush} from "../pkg"
+import init, {WorldVM, create_world, Tool, create_default_brush} from "../pkg"
 
 // let brush = Brush().
 
 async function main() {
-//    let exports = await init();
-
-    const brush = create_default_brush();
-    console.log(brush);
+    let exports = await init();
 
     const bg_canvas = <HTMLCanvasElement>document.getElementById("bg-canvas");
     const gp_canvas = <HTMLCanvasElement>document.getElementById("gp-canvas");
     const ui_canvas = <HTMLCanvasElement>document.getElementById("ui-canvas");
     let world = <WorldVM>create_world(ui_canvas, gp_canvas, bg_canvas);
+
+    bg_canvas.width = 1080;
+    bg_canvas.height = 1080;
 
     let animationId: number | null = null;
 
@@ -60,17 +60,18 @@ async function main() {
     } 
 
     const id_btn_to_cell_type = {
-        "acid": CellType.Acid,
-        "fire": CellType.Fire,
-        "gunpowder": CellType.Gunpowder,
-        "lava": CellType.Lava,
-        "oil": CellType.Oil,
-        "propane": CellType.Propane,
-        "rock": CellType.Rock,
-        "sand": CellType.Sand,
-        "vapor": CellType.Vapor,
-        "water": CellType.Water,
-        "wood": CellType.Wood,
+        "delete": Tool.Delete,
+        "acid": Tool.Acid,
+        "fire": Tool.Fire,
+        "gunpowder": Tool.Gunpowder,
+        "lava": Tool.Lava,
+        "oil": Tool.Oil,
+        "propane": Tool.Propane,
+        "rock": Tool.Rock,
+        "sand": Tool.Sand,
+        "vapor": Tool.Vapor,
+        "water": Tool.Water,
+        "wood": Tool.Wood,
     }
 
     Object.entries(id_btn_to_cell_type).forEach(entry => {

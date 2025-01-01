@@ -25,8 +25,16 @@ body {
     width: 600px;
 }
 
+#top-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+    flex-direction: column;
+}
+
 canvas {
-    position: absolute;
+    margin: 100px;
 }
 
 #bg-canvas {

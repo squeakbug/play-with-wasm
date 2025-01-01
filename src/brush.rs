@@ -1,3 +1,5 @@
+use std::cmp::{Eq, PartialEq};
+
 use wasm_bindgen::prelude::*;
 
 use crate::{shared::Vec2d, world::World};
@@ -10,7 +12,7 @@ pub enum Shape {
 }
 
 #[wasm_bindgen]
-#[derive(Clone)]
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub enum Tool {
     Delete,
     Rock,

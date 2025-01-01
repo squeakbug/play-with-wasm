@@ -45,6 +45,7 @@ module.exports = {
     }),
     new WasmPackPlugin({
       crateDirectory: path.resolve(__dirname, 'src'),
+      extraArgs: "--target web",
       watchDirectories: [
         path.resolve(__dirname, "./src")
       ],

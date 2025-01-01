@@ -1,9 +1,6 @@
 mod brush;
 mod cell;
-mod cells;
 mod config;
-mod simulator;
-mod space;
 mod world;
 mod shared;
 mod ui_renderer;
@@ -18,7 +15,6 @@ use web_sys::{CanvasRenderingContext2d, HtmlCanvasElement};
 use shared::Vec2d;
 use world::World;
 use brush::Brush;
-use cell::CellType;
 use ui_renderer::UIRenderer2d;
 use background_renderer::BackgroundRenderer2d;
 use gameplay_renderer::GameplayRenderer2d;
@@ -37,7 +33,7 @@ pub struct WorldVM {
 #[wasm_bindgen]
 impl WorldVM {
     pub fn poll(&mut self) {
-        self.world.tick();
+        //self.world.tick();
     }
 
     pub fn tap_on_grid(&mut self, y: f64, x: f64) {
@@ -67,8 +63,8 @@ impl WorldVM {
         self.world.reset();
     }
 
-    pub fn render(&self) {
-        self.background_renderer.render();
+    pub fn render(&mut self) {
+        self.background_renderer.render_world(&self.world);
         self.gameplay_renderer.render_world(&self.world);
         self.ui_renderer.render();
     }
@@ -80,18 +76,22 @@ pub fn create_world(
     gameplay_canvas: HtmlCanvasElement,
     background_canvas: HtmlCanvasElement,
 ) -> WorldVM {
+    let world = World::with_size(Vec2d { x: 50, y: 50 });
+
     let ui_ctx = ui_canvas
         .get_context("2d")
         .unwrap()
         .unwrap()
         .dyn_into::<CanvasRenderingContext2d>()
         .unwrap();
-    let gm_ctx = gameplay_canvas
+
+    let gp_ctx = gameplay_canvas
         .get_context("2d")
         .unwrap()
         .unwrap()
         .dyn_into::<CanvasRenderingContext2d>()
         .unwrap();
+
     let bg_ctx_options = JsValue::from_serde(&serde_json::json!({
         "alpha": false,
     })).unwrap();
@@ -101,11 +101,14 @@ pub fn create_world(
         .unwrap()
         .dyn_into::<CanvasRenderingContext2d>()
         .unwrap();
+    let bg_renderer = BackgroundRenderer2d::new(bg_ctx, &world);
 
     WorldVMBuilder::default()
+        .world(world)
+        .brush(Brush::new())
         .ui_renderer(ui_ctx.into())
-        .gameplay_renderer(gm_ctx.into())
-        .background_renderer(bg_ctx.into())
+        .gameplay_renderer(gp_ctx.into())
+        .background_renderer(bg_renderer)
         .build()
         .unwrap()
 }
