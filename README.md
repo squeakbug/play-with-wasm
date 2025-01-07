@@ -1,5 +1,7 @@
 # Falling sand world component
 
+*Combinators, gliders, or spacecrafts --- what do you choose?*
+
 ## Предварительные требования 
 
 Installed [wasm-pack](https://rustwasm.github.io/wasm-pack/installer/)
@@ -16,8 +18,3 @@ npm run build  # build wasm module and bundle it with frontend
 ```sh
 npm start      # watch changes in source directories
 ```
-
-## Ссылки
-
-* [The-Powder-Toy](https://github.com/The-Powder-Toy/The-Powder-Toy)
-* [Falling Rust](https://jabberwocky.ca/projects/fallingrust/)
