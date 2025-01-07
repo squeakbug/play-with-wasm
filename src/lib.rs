@@ -6,6 +6,7 @@ mod shared;
 mod ui_renderer;
 mod gameplay_renderer;
 mod background_renderer;
+mod rle;
 
 use wasm_bindgen::prelude::*;
 use derive_builder::Builder;

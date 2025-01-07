@@ -2,6 +2,23 @@
 pub enum Cell {
     Empty,
     Filled(FilledCell),
+    Conway(ConwayCell)
+}
+
+#[derive(Clone, Copy, Debug)]
+pub struct ConwayCell {
+    pub color: &'static str,
+}
+
+#[derive(Clone, Copy, Debug)]
+pub enum VonNeumanCellState {
+    
+}
+
+#[derive(Clone, Copy, Debug)]
+pub struct VonNeumanCell {
+    pub color: &'static str,
+    pub state:
 }
 
 #[derive(Clone, Copy, Debug)]
