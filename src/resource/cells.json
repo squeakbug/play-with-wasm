@@ -1,0 +1,134 @@
+[
+    {
+        "tool": "Rock",
+        "cell": {
+            "type": "Filled",
+            "color": "#000000",
+            "dx": 0.0,
+            "dy": 0.0,
+            "density": 3.0,
+            "temp": 27.0,
+            "redox_activity": 0.0
+        }
+    },
+    {
+        "tool": "Wood",
+        "cell": {
+            "type": "Filled",
+            "color": "#606040",
+            "dx": 0.0,
+            "dy": 0.0,
+            "density": 3.0,
+            "temp": 27.0,
+            "redox_activity": 0.0
+        }
+    },
+    {
+        "tool": "Sand",
+        "cell": {
+            "type": "Filled",
+            "color": "#886611",
+            "dx": 0.0,
+            "dy": 0.0,
+            "density": 3.0,
+            "temp": 27.0,
+            "redox_activity": 0.0
+        }
+    },
+    {
+        "tool": "Gunpowder",
+        "cell": {
+            "type": "Filled",
+            "color": "#666666",
+            "dx": 0.0,
+            "dy": 0.0,
+            "density": 3.0,
+            "temp": 27.0,
+            "redox_activity": 0.0
+        }
+    },
+    {
+        "tool": "Water",
+        "cell": {
+            "type": "Filled",
+            "color": "#0000FF",
+            "dx": 0.0,
+            "dy": 0.0,
+            "density": 1.0,
+            "temp": 27.0,
+            "redox_activity": 0.0
+        }
+    },
+    {
+        "tool": "Oil",
+        "cell": {
+            "type": "Filled",
+            "color": "#007777",
+            "dx": 0.0,
+            "dy": 0.0,
+            "density": 0.8,
+            "temp": 27.0,
+            "redox_activity": 0.0
+        }
+    },
+    {
+        "tool": "Propane",
+        "cell": {
+            "type": "Filled",
+            "color": "#77FFFF",
+            "dx": 0.0,
+            "dy": 0.0,
+            "density": 0.1,
+            "temp": 27.0,
+            "redox_activity": 0.0
+        }
+    },
+    {
+        "tool": "Fire",
+        "cell": {
+            "type": "Filled",
+            "color": "#FF3300",
+            "dx": 0.0,
+            "dy": 0.0,
+            "density": 0.01,
+            "temp": 27.0,
+            "redox_activity": 0.0
+        }
+    },
+    {
+        "tool": "Lava",
+        "cell": {
+            "type": "Filled",
+            "color": "#993300",
+            "dx": 0.0,
+            "dy": 0.0,
+            "density": 3.0,
+            "temp": 27.0,
+            "redox_activity": 0.0
+        }
+    },
+    {
+        "tool": "Acid",
+        "cell": {
+            "type": "Filled",
+            "color": "#009966",
+            "dx": 0.0,
+            "dy": 0.0,
+            "density": 1.2,
+            "temp": 27.0,
+            "redox_activity": 0.0
+        }
+    },
+    {
+        "tool": "Vapor",
+        "cell": {
+            "type": "Filled",
+            "color": "#EEEEFF",
+            "dx": 0.0,
+            "dy": 0.0,
+            "density": 0.1,
+            "temp": 27.0,
+            "redox_activity": 0.0
+        }
+    }
+]

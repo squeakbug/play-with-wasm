@@ -1,6 +1,6 @@
 use web_sys::{CanvasRenderingContext2d, WebGlRenderingContext, WebGl2RenderingContext};
 
-use crate::{cell::Cell, world::World};
+use crate::{cell::Cell, physicslife::World};
 
 pub struct _GameplayRendererWebGL {
     gl: WebGlRenderingContext,
@@ -28,10 +28,14 @@ impl GameplayRenderer2d {
                         self.ctx.set_fill_style_str("#ffffff");
                         self.ctx.fill_rect(col as f64, row as f64, 1f64, 1f64);
                     },
-                    Cell::Filled(cell) => {
+                    Cell::Physical(cell) => {
                         self.ctx.set_fill_style_str(cell.color);
                         self.ctx.fill_rect(col as f64, row as f64, 1f64, 1f64);
                     },
+                    Cell::Conway(cell) => {
+                        self.ctx.set_fill_style_str(cell.color);
+                        self.ctx.fill_rect(col as f64, row as f64, 1f64, 1f64);
+                    }
                 }
             }
         }

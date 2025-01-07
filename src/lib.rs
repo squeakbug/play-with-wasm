@@ -1,23 +1,23 @@
 mod brush;
 mod cell;
-mod config;
-mod world;
-mod shared;
-mod ui_renderer;
-mod gameplay_renderer;
-mod background_renderer;
+mod render;
+mod rle;
+mod physicslife;
+mod quicklife;
 
+use glam::USizeVec2;
 use wasm_bindgen::prelude::*;
 use derive_builder::Builder;
 use gloo_utils::format::JsValueSerdeExt;
 use web_sys::{CanvasRenderingContext2d, HtmlCanvasElement};
 
-use shared::Vec2d;
-use world::World;
 use brush::Brush;
-use ui_renderer::UIRenderer2d;
-use background_renderer::BackgroundRenderer2d;
-use gameplay_renderer::GameplayRenderer2d;
+use render::{
+    background_renderer::BackgroundRenderer2d,
+    gameplay_renderer::GameplayRenderer2d,
+    ui_renderer::UIRenderer2d,
+};
+use crate::physicslife::World;
 
 #[wasm_bindgen]
 #[derive(Builder)]
@@ -33,26 +33,22 @@ pub struct WorldVM {
 #[wasm_bindgen]
 impl WorldVM {
     pub fn poll(&mut self) {
-        //self.world.tick();
+        self.world.tick();
     }
 
-    pub fn tap_on_grid(&mut self, y: f64, x: f64) {
+    pub fn tap_on_grid(&mut self, y: usize, x: usize) {
         let world_coord = self.background_renderer
-            .apply_reverse_frame_matrix(Vec2d { x, y });
+            .apply_reverse_frame_matrix(USizeVec2::new(x, y));
         self.brush.set_position(world_coord.x, world_coord.y);
         self.brush.apply(&mut self.world);
     }
 
-    pub fn hover_on_grid(&mut self, y: f64, x: f64) {
+    pub fn hover_on_grid(&mut self, y: f32, x: f32) {
         self.brush.set_position(x as usize, y as usize);
     }
 
-    pub fn pause_simulation(&mut self) {
-        self.world.pause();
-    }
-
-    pub fn resume_simultaion(&mut self) {
-        self.world.resume();
+    pub fn toggle_simulation(&mut self) {
+        self.world.toggle_pause();
     }
 
     pub fn set_brush(&mut self, brush: Brush) {
@@ -76,7 +72,7 @@ pub fn create_world(
     gameplay_canvas: HtmlCanvasElement,
     background_canvas: HtmlCanvasElement,
 ) -> WorldVM {
-    let world = World::with_size(Vec2d { x: 50, y: 50 });
+    let world = World::with_size(USizeVec2::new(50, 50));
 
     let ui_ctx = ui_canvas
         .get_context("2d")

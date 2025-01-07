@@ -1,6 +1,7 @@
+use glam::USizeVec2;
 use web_sys::CanvasRenderingContext2d;
 
-use crate::{shared::Vec2d, world::World};
+use crate::physicslife::World;
 
 pub struct BackgroundRenderer2d {
     ctx: CanvasRenderingContext2d,
@@ -16,16 +17,16 @@ impl BackgroundRenderer2d {
 
     // TODO: use rayon
     // TODO: apply canvas API for scaling
-    pub fn apply_reverse_frame_matrix(&self, client: Vec2d<f64>) -> Vec2d<usize> {
-        let row = client.x / self.scalex;
-        let col = client.y / self.scaley;
-        Vec2d { y: row as usize, x: col as usize }
+    pub fn apply_reverse_frame_matrix(&self, client: USizeVec2) -> USizeVec2 {
+        let row = client.x as f64 / self.scalex;
+        let col = client.y as f64 / self.scaley;
+        USizeVec2 { y: row as usize, x: col as usize }
     }
 
-    pub fn apply_frame_matrix(&self, client: Vec2d<usize>) -> Vec2d<f64> {
+    pub fn apply_frame_matrix(&self, client: USizeVec2) -> USizeVec2 {
         let row = client.x as f64 * self.scalex;
         let col = client.y as f64 * self.scaley;
-        Vec2d { y: row, x: col }
+        USizeVec2 { y: row as usize, x: col as usize }
     }
 
     pub fn resize(&mut self, world: &World) {
@@ -48,8 +49,8 @@ impl BackgroundRenderer2d {
         let bounding_rect = self.ctx.canvas().unwrap().get_bounding_client_rect();
         let rect_height = bounding_rect.height();
         let rect_width = bounding_rect.width();
-        let width = world.get_width();
-        let height = world.get_height();
+        let width = world.width;
+        let height = world.height;
 
         self.ctx.clear_rect(0.0, 0.0, rect_width, rect_height);
 
@@ -88,8 +89,8 @@ impl BackgroundRenderer2d {
         let bounding_rect = ctx.canvas().unwrap().get_bounding_client_rect();
         let rect_height = bounding_rect.height();
         let rect_width = bounding_rect.width();
-        let width = world.get_width();
-        let height = world.get_height();
+        let width = world.width;
+        let height = world.height;
 
         let scalex = rect_width / width as f64;
         let scaley = rect_height / height as f64;

@@ -22,6 +22,7 @@ web-sys = { version = "0.3.76", features = [
     "DomRect", "Element"
 ] }
 console_error_panic_hook = { version = "0.1.7", optional = true }
+glam = "0.30.4"
 fixedbitset = "0.4.2"
 derive_builder = "0.20.2"
 anyhow = "1.0.95"

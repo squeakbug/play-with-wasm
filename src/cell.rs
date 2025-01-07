@@ -1,26 +1,51 @@
 #[derive(Clone, Copy, Debug)]
 pub enum Cell {
     Empty,
-    Filled(FilledCell),
+    Physical(PhysicalCell),
+    Conway(ConwayCell)
 }
 
 #[derive(Clone, Copy, Debug)]
-pub struct FilledCell {
+pub struct ConwayCell {
     pub color: &'static str,
+}
 
-    pub dx: f32,
-    pub dy: f32,
+#[derive(Clone, Copy, Debug)]
+pub enum VonNeumanCellState {
+    
+}
+
+#[derive(Clone, Copy, Debug)]
+pub struct VonNeumanCell {
+    pub color: &'static str,
+}
+
+#[derive(Clone, Copy, Debug)]
+pub struct PhysicalCellBuilder {
+    pub color: &'static str,
+}
+
+#[derive(Clone, Copy, Debug)]
+pub struct PhysicalCell {
+    pub color: &'static str,
     pub density: f64,
-
-    pub temp: f32,
-
+    pub temp: f64,
     pub redox_activity: f64,
 }
 
-impl FilledCell {
-    pub fn get_kinetic_e(&self) -> f32 {
-        let density = self.density;
-        let (dx, dy) = (self.dx, self.dy);
-        ((dx * dx + dy * dy) * density as f32) / 2.0
+impl PhysicalCellBuilder {
+    pub fn build(&self) -> Cell {
+        Cell::Physical(PhysicalCell {
+            color: self.color,
+            density: 0f64, 
+            temp: 0f64, 
+            redox_activity: 0f64,
+        })
+    }
+}
+
+impl Default for PhysicalCellBuilder {
+    fn default() -> Self {
+        PhysicalCellBuilder { color: "TODO" }
     }
 }
